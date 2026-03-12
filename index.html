@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ian Fraser — Vibe Coded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #fdf8f2;
+    --surface:  #fff9f3;
+    --card:     #ffffff;
+    --border:   #e8ddd0;
+    --ink:      #2d2418;
+    --ink2:     #6b5744;
+    --muted:    #9c8676;
+    --accent:   #e85d26;
+    --accent-l: #ffeee6;
+    --teal:     #1a9e8f;
+    --teal-l:   #e0f5f3;
+    --gold:     #c4871a;
+    --gold-l:   #fef4df;
+    --violet:   #6c4fbf;
+    --violet-l: #eeebfa;
+    --sky:      #1878c8;
+    --sky-l:    #e5f1fb;
+    --rose:     #c03060;
+    --rose-l:   #fce8f0;
+    --ff-display: 'Fraunces', Georgia, serif;
+    --ff-body:    'Plus Jakarta Sans', sans-serif;
+    --ff-mono:    'DM Mono', monospace;
+    --radius: 16px;
+    --shadow: 0 2px 12px rgba(45,36,24,0.08), 0 1px 3px rgba(45,36,24,0.05);
+    --shadow-hover: 0 8px 32px rgba(45,36,24,0.14), 0 2px 8px rgba(45,36,24,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--ff-body);
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(160deg, #fff5ec 0%, #fdf0e8 40%, #fef8ee 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .blob-1 { width: 420px; height: 420px; background: #ffc89a; top: -100px; left: -80px; }
+  .blob-2 { width: 320px; height: 320px; background: #ffe0a0; top: 60px; right: -60px; }
+  .blob-3 { width: 260px; height: 260px; background: #a8e6d0; bottom: -60px; left: 30%; }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(45,36,24,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.1s forwards;
+  }
+
+  .hero-badge-dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  .hero-title {
+    font-family: var(--ff-display);
+    font-size: clamp(3.2rem, 9vw, 7.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.25s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .hero-title em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0; right: 0;
+    height: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6'%3E%3Cpath d='M0 3 Q5 0 10 3 Q15 6 20 3' stroke='%23e85d26' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 20px 6px;
+    opacity: 0.6;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--ink2);
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.45s forwards;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 999px;
+    font-family: var(--ff-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 16px rgba(232,93,38,0.35);
+  }
+  .btn-primary:hover {
+    background: #d44e1e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232,93,38,0.45);
+  }
+
+  .btn-ghost {
+    background: white;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .stat {
+    flex: 1;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--ff-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    font-weight: 500;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    background: var(--accent);
+    padding: 0.6rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker 28s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    padding: 0 2rem;
+  }
+
+  .ticker-sep { color: rgba(255,255,255,0.4); }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text h2 {
+    font-family: var(--ff-display);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+
+  .about-text h2 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--teal);
+  }
+
+  .about-text p {
+    color: var(--ink2);
+    font-size: 0.97rem;
+    margin-bottom: 1rem;
+  }
+
+  .philosophy-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .philosophy-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--ink2);
+  }
+
+  .phil-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects {
+    padding: 1rem 2rem 5rem;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .section-intro {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-intro h2 {
+    font-family: var(--ff-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-intro p {
+    color: var(--ink2);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-accent, var(--accent));
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--card-accent-l, var(--accent-l));
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .card:nth-child(1) { --card-accent: var(--accent);  --card-accent-l: var(--accent-l); }
+  .card:nth-child(2) { --card-accent: var(--teal);    --card-accent-l: var(--teal-l);  }
+  .card:nth-child(3) { --card-accent: var(--gold);    --card-accent-l: var(--gold-l);  }
+  .card:nth-child(4) { --card-accent: var(--violet);  --card-accent-l: var(--violet-l); }
+  .card:nth-child(5) { --card-accent: var(--sky);     --card-accent-l: var(--sky-l);   }
+  .card:nth-child(6) { --card-accent: var(--rose);    --card-accent-l: var(--rose-l);  }
+
+  .card-icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--card-accent-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .card-title {
+    font-family: var(--ff-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-desc {
+    font-size: 0.87rem;
+    color: var(--ink2);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-tag {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--card-accent);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .card-link:hover { gap: 0.7rem; }
+
+  .card-live {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    color: #1a8050;
+    letter-spacing: 0.1em;
+    background: #e6f7ef;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #b2e4cc;
+  }
+
+  .card-live-dot {
+    width: 6px; height: 6px;
+    background: #2db870;
+    border-radius: 50%;
+    animation: blink 2.5s ease-in-out infinite;
+  }
+
+  /* ─── INTERLUDE ─── */
+  .interlude {
+    background: linear-gradient(135deg, #fff8ee 0%, #fef3e0 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+
+  .interlude-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .interlude h3 {
+    font-family: var(--ff-display);
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .interlude p {
+    color: var(--ink2);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .interlude-chips {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+  }
+
+  .chip {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink2);
+    box-shadow: var(--shadow);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    padding: 4rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: var(--ff-display);
+    font-size: 2.5rem;
+    font-style: italic;
+    color: #ffd4b8;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-nav a {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-nav a:hover { color: #ffd4b8; }
+
+  .footer-copy {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 680px) {
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-stats { max-width: 340px; }
+    .stat-num { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Ian Fraser · kbcianfa · GitHub Pages · All projects live
+    </div>
+    <h1 class="hero-title">Building useful<br>things with <em>pure vibes</em></h1>
+    <p class="hero-sub">Six real, free, live web apps — built solo with Claude, vanilla JS, and zero build steps. No backend. No nonsense. Just shipped.</p>
+    <div class="hero-cta-row">
+      <a href="#projects" class="btn btn-primary">See the Projects ↓</a>
+      <a href="https://github.com/kbcianfa" class="btn btn-ghost" target="_blank">GitHub Profile</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Live projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Build steps</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Bloke coding</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Vibes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Single-file HTML</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Vanilla JS</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">No Build Step</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">GitHub Pages</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">AI Powered</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Built for Australia 🇦🇺</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Free Forever</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Zero Dependencies</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Offline Ready</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Single-file HTML</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Vanilla JS</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">No Build Step</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">GitHub Pages</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">AI Powered</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Built for Australia 🇦🇺</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Free Forever</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Zero Dependencies</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Offline Ready</span><span class="ticker-sep"> · </span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-text reveal">
+    <h2>Build it.<br><em>Ship it.</em><br>Use it.</h2>
+    <p>The philosophy is dead simple: make something real, make it free, and make it actually work. No npm install. No webpack config. No deployment pipeline. Just a file and a URL.</p>
+    <p>Everything here was built during an intensive vibe-coding run — a solo session of describing what I wanted, letting Claude write the bones, then iterating until it felt right.</p>
+  </div>
+  <ul class="philosophy-list reveal">
+    <li>
+      <div class="phil-icon" style="background:#ffeee6;">📄</div>
+      <span><strong>Single-file HTML</strong> — the whole app lives in one file. Open it, it works.</span>
+    </li>
+    <li>
+      <div class="phil-icon" style="background:#e0f5f3;">🚫</div>
+      <span><strong>Zero build steps</strong> — no npm, no Webpack, no "just run this script first."</span>
+    </li>
+    <li>
+      <div class="phil-icon" style="background:#fef4df;">🇦🇺</div>
+      <span><strong>Australia-first</strong> — specs, roads, humour, and prices are all AU by default.</span>
+    </li>
+    <li>
+      <div class="phil-icon" style="background:#eeebfa;">🤖</div>
+      <span><strong>AI as co-pilot</strong> — Claude writes the code; I steer, test, and ship.</span>
+    </li>
+    <li>
+      <div class="phil-icon" style="background:#e5f1fb;">🆓</div>
+      <span><strong>Free forever</strong> — hosted on GitHub Pages. No paywalls, no accounts needed.</span>
+    </li>
+  </ul>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-intro reveal">
+    <h2>The Projects</h2>
+    <p>Six apps. All live. All free. Click any card to visit the project.</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">😤</div>
+      <h3 class="card-title">The Grumpy Old Man Course</h3>
+      <p class="card-desc">Australia's premier institution for advanced whinging and certified curmudgeonry. Ten modules of time-honoured Australian grumpery, a Grump-O-Meter™, Complaint Wheel, Bingo card, and an AI-powered Old Mate who'll validate every grievance you've ever had about bin night.</p>
+      <div class="card-tags">
+        <span class="card-tag">Humour</span>
+        <span class="card-tag">Groq AI</span>
+        <span class="card-tag">Australian</span>
+        <span class="card-tag">Interactive</span>
+        <span class="card-tag">Certificate</span>
+      </div>
+      <a href="https://kbcianfa.github.io/Grumpy/" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">🚗</div>
+      <h3 class="card-title">TowCheck AU</h3>
+      <p class="card-desc">Towing compliance made actually useful. Live CarQuery API lookups for real makes and models, payload and GCM/GTM calculations, 5th-wheeler pin weight logic, and manufacturer-verified AU specs. Find out exactly what your vehicle can legally tow before you hook anything up.</p>
+      <div class="card-tags">
+        <span class="card-tag">CarQuery API</span>
+        <span class="card-tag">Towing</span>
+        <span class="card-tag">AU Specs</span>
+        <span class="card-tag">Compliance</span>
+        <span class="card-tag">GVM / GCM</span>
+      </div>
+      <a href="https://kbcianfa.github.io/Towing/" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">⚡</div>
+      <h3 class="card-title">RV Power Designer</h3>
+      <p class="card-desc">The only free tool that handles 12V, 24V, and 48V RV and caravan systems — with ABYC-standard wire sizing, a solar generator finder, and live system diagrams. Built for the serious DIYer who wants to get the setup right without paying a sparky $300 to tell them the obvious.</p>
+      <div class="card-tags">
+        <span class="card-tag">Solar</span>
+        <span class="card-tag">12V / 24V / 48V</span>
+        <span class="card-tag">Wire Sizing</span>
+        <span class="card-tag">RV / Caravan</span>
+        <span class="card-tag">Offline</span>
+      </div>
+      <a href="https://kbcianfa.github.io/RVPowerSystems/landing.html" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">✨</div>
+      <h3 class="card-title">Your First Vibe Coded Website</h3>
+      <p class="card-desc">A 45-minute beginner tutorial that takes complete non-coders from absolutely zero to a live website with a real URL. You describe what you want, Claude writes the code, Netlify hosts it for free. Nothing to install, no credit card, no experience whatsoever required.</p>
+      <div class="card-tags">
+        <span class="card-tag">Tutorial</span>
+        <span class="card-tag">Beginner</span>
+        <span class="card-tag">Claude AI</span>
+        <span class="card-tag">Netlify</span>
+        <span class="card-tag">45 min</span>
+      </div>
+      <a href="https://kbcianfa.github.io/vibecoding/" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">🗺️</div>
+      <h3 class="card-title">LogMyJourney AU</h3>
+      <p class="card-desc">Two Australian road trip logging apps in one — a petrol/diesel edition and an EV/PHEV edition. From the outback servo to the city charger, every stop logged. Works offline in the middle of nowhere, data stays on your device, and there's no account to create or forget the password to.</p>
+      <div class="card-tags">
+        <span class="card-tag">Road Trip</span>
+        <span class="card-tag">Offline</span>
+        <span class="card-tag">EV &amp; ICE</span>
+        <span class="card-tag">Australian</span>
+        <span class="card-tag">Fuel Log</span>
+      </div>
+      <a href="https://kbcianfa.github.io/TripLog/homepage.html" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-live"><span class="card-live-dot"></span> LIVE</div>
+      <div class="card-icon-wrap">🏎️</div>
+      <h3 class="card-title">MINI Inspired by Goodwood</h3>
+      <p class="card-desc">A lovingly assembled production register for the ultra-rare MINI Inspired by Goodwood — 1,000 vehicles built worldwide, November 2011 to July 2012. Years of research, cross-referenced build records, VIN data from 23 markets, and owner submissions. A labour of love for a genuinely special car.</p>
+      <div class="card-tags">
+        <span class="card-tag">MINI</span>
+        <span class="card-tag">Production Register</span>
+        <span class="card-tag">1,000 Cars</span>
+        <span class="card-tag">23 Markets</span>
+        <span class="card-tag">VIN Search</span>
+      </div>
+      <a href="https://kbcianfa.github.io/Goodwood/" target="_blank" class="card-link">Visit Project →</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- INTERLUDE -->
+<section class="interlude">
+  <div class="interlude-inner reveal">
+    <h3>"No build step" is not laziness.<br>It's a design decision.</h3>
+    <p>Every project on this page loads instantly, works offline where it matters, and can be forked, saved, and hosted by anyone in under 60 seconds. Complexity is the enemy of done — and done beats perfect every single time.</p>
+    <div class="interlude-chips">
+      <span class="chip">HTML5</span>
+      <span class="chip">CSS Variables</span>
+      <span class="chip">Canvas API</span>
+      <span class="chip">Vanilla JS</span>
+      <span class="chip">Groq API</span>
+      <span class="chip">Claude AI</span>
+      <span class="chip">Nominatim</span>
+      <span class="chip">OSRM</span>
+      <span class="chip">CarQuery API</span>
+      <span class="chip">localStorage</span>
+      <span class="chip">GitHub Pages</span>
+      <span class="chip">Pure Vibes ✨</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Vibe Coded</div>
+  <p class="footer-tagline">Six free tools · One GitHub account · Zero build steps · Made in Australia 🇦🇺</p>
+  <nav class="footer-nav">
+    <a href="https://kbcianfa.github.io/Grumpy/" target="_blank">Grumpy Old Man</a>
+    <a href="https://kbcianfa.github.io/Towing/" target="_blank">TowCheck AU</a>
+    <a href="https://kbcianfa.github.io/RVPowerSystems/landing.html" target="_blank">RV Power Designer</a>
+    <a href="https://kbcianfa.github.io/vibecoding/" target="_blank">Vibe Tutorial</a>
+    <a href="https://kbcianfa.github.io/TripLog/homepage.html" target="_blank">LogMyJourney AU</a>
+    <a href="https://kbcianfa.github.io/Goodwood/" target="_blank">MINI Goodwood</a>
+    <a href="https://github.com/kbcianfa" target="_blank">GitHub</a>
+  </nav>
+  <p class="footer-copy">© 2025 Ian Fraser · github.com/kbcianfa · All projects free and open on GitHub Pages</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const grid = entry.target.closest('.projects-grid');
+      const idx = grid ? Array.from(grid.querySelectorAll('.reveal')).indexOf(entry.target) : 0;
+      setTimeout(() => entry.target.classList.add('visible'), grid ? idx * 90 : 0);
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
